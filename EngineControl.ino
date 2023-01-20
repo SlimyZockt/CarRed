@@ -1,44 +1,45 @@
-#include<Servo.h>
-#define TARGET_TPS = 60
+int directionPinRight = 12;
+int brakePinRight = 9;
+int pwmPinRight = 3;
 
-Servo leftMotor;
-Servo rightMotor;
+int directionPinLeft = 13;
+int pwmPinLeft = 11;
+int brakePinLeft = 8;
 
-unsigned long oldTime = 0;
-unsigned long deltaTime;
+// boolean to switch direction
+bool directionState;
 
-
-void setupEngineControl(PINS leftMotorPin, PINS rightMotorPin, int targetTPS)
+void setupEngine()
 {
-    leftMotor.attach(9);
-    rightMotor.attach(10);
-    deltaTime = millis();
+    // define pins
+    pinMode(directionPinRight, OUTPUT);
+    pinMode(pwmPinRight, OUTPUT);
+    pinMode(brakePinRight, OUTPUT);
+    pinMode(directionPinLeft, OUTPUT);
+    pinMode(pwmPinLeft, OUTPUT);
+    pinMode(brakePinLeft, OUTPUT);
 }
 
-void move(float angle, int speed)
-{
-    angle = constrain(x, a, b)
-    float x = cos(angle) float y = sin(angle)                                                             leftMotor.write(leftSpeed);
-    rightMotor.write(rightSpeed);
+void drive(float ange, int speed) {
+    digitalWrite(directionPinRight, HIGH);
+    digitalWrite(directionPinLeft, HIGH);
+
+    digitalWrite(brakePinRight, LOW);
+    digitalWrite(brakePinLeft, LOW);
+    analogWrite(pwmPinRight, speed);
+    analogWrite(pwmPinLeft, speed);
 }
 
+void dive_time(int time) {
+    drive(0, 130);
+    delay(time);
+    // activate breaks
+    digitalWrite(brakePinLeft, HIGH);
+    digitalWrite(brakePinRight, HIGH);
 
+    // set work duty for the motor to 0 (off)
+    analogWrite(pwmPinLeft, 0);
+    analogWrite(pwmPinRight, 0);
 
-void updateEngineDelta()
-{
-    unsigned long time = millis()
-    deltaTime = time - last_time;
-    oldTime = time;
-}
-
-void test_drive()
-{
-    move(90, 90); // move forward
-    delay(1000);
-    move(120, 60); // turn left
-    delay(1000);
-    move(60, 120); // turn right
-    delay(1000);
-    move(0, 0); // stop
-    delay(1000);
+    delay(time);
 }
