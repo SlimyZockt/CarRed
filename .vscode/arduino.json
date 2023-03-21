@@ -1,5 +1,4 @@
 {
     "sketch": "CarRed.ino",
-    "board": "arduino:avr:uno",
-    "port": "COM3"
+    "board": "arduino:avr:uno"
 }
